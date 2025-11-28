@@ -6,7 +6,7 @@ CREATE DATABASE food_delivery
 
 USE food_delivery;
 
--- السائقون
+
 CREATE TABLE drivers (
   driver_id   INT PRIMARY KEY AUTO_INCREMENT,
   driver_name VARCHAR(100) NOT NULL,
@@ -14,20 +14,20 @@ CREATE TABLE drivers (
   start_date  DATE NOT NULL
 );
 
--- الزبائن
+
 CREATE TABLE customers (
   customer_id   INT PRIMARY KEY AUTO_INCREMENT,
   customer_name VARCHAR(100) NOT NULL,
-  city          VARCHAR(100) NOT NULL,   -- "Baghdad"
+  city          VARCHAR(100) NOT NULL,  
   signup_date   DATE NOT NULL
 );
 
--- البائعون (vendors) — مناطق بغداد فقط (بدون المطار)
+
 CREATE TABLE vendors (
   vendor_id    INT PRIMARY KEY AUTO_INCREMENT,
   vendor_name  VARCHAR(150) NOT NULL,
-  cuisine      VARCHAR(80)  NOT NULL,    -- نوع المطبخ: Shawarma, Burger, Pizza...
-  area         VARCHAR(100) NOT NULL,    -- Mansour, Karada, ...
+  cuisine      VARCHAR(80)  NOT NULL,    
+  area         VARCHAR(100) NOT NULL,   
   rating       DECIMAL(3,2) CHECK (rating BETWEEN 1 AND 5),
   join_date    DATE NOT NULL
 );
@@ -37,8 +37,8 @@ CREATE TABLE orders (
   order_id         BIGINT PRIMARY KEY AUTO_INCREMENT,
   customer_id      INT NOT NULL,
   driver_id        INT NOT NULL,
-  vendor_id        INT NOT NULL,          -- الربط مع البائع
-  food_category    VARCHAR(100) NOT NULL, -- نشتقها من cuisine
+  vendor_id        INT NOT NULL,         
+  food_category    VARCHAR(100) NOT NULL, 
   order_datetime   DATETIME NOT NULL,
   pickup_area      VARCHAR(100) NOT NULL,
   dropoff_area     VARCHAR(100) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE orders (
   CONSTRAINT fk_orders_vendor   FOREIGN KEY (vendor_id)   REFERENCES vendors(vendor_id)
 );
 
--- فهارس مفيدة
+
 CREATE INDEX idx_orders_datetime ON orders(order_datetime);
 CREATE INDEX idx_orders_driver   ON orders(driver_id);
 CREATE INDEX idx_orders_vendor   ON orders(vendor_id);
